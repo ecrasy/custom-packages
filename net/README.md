@@ -1,2 +1,2 @@
 # openwrt-net
-net package for official openwrt
+net package for lede openwrt
