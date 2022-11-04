@@ -1,7 +1,6 @@
 
 config qbittorrent 'main'
 	option user 'root'
-	option Locale 'zh'
 	option BTProtocol 'Both'
 	option DisableAutoTMMByDefault 'true'
 	option CategoryChanged 'false'
@@ -17,7 +16,8 @@ config qbittorrent 'main'
 	option UseRandomPort 'false'
 	option PortRangeMin '55555'
 	option TempPathEnabled 'false'
-	option enabled '0'
 	option AuthSubnetWhitelistEnabled 'true'
 	list AuthSubnetWhitelist '192.168.0.0/16'
+	option SavePath '/mnt/sdb/download'
+	option Locale 'en'
 
