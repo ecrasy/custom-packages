@@ -101,6 +101,7 @@ local function getTempStatus()
 		end
 
 	end
+
 	io.write(json.stringify(sensors))
 end
 
