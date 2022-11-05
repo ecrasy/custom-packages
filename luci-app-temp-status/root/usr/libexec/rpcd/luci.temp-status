@@ -29,6 +29,7 @@ local function getTempStatus()
 					local dNumber = tonumber(item:match("[0-9]+"))
 					local title   = readFile(deviceDirPath .. "/name")
 					local sources = {}
+
 					for source in deviceDir do
 						if source:match("^temp[0-9]+_input$") then
 							local sNumber = tonumber(source:match("[0-9]+"))
@@ -36,16 +37,21 @@ local function getTempStatus()
 								string.format("%s/%s", deviceDirPath, source))
 							local label   = readFile(
 								string.format("%s/%s", deviceDirPath, source:gsub("_input$", "_label")))
-							if sNumber ~= nil and temp ~= nil then
-								sources[#sources + 1] = {
-									number = sNumber,
-									item   = source,
-									label  = label,
-									temp   = tonumber(temp),
-								}
-							end
+
+                            if string.find(label, "Core") then
+                                if sNumber ~= nil and temp ~= nil then
+                                    sources[#sources + 1] = {
+                                        number = sNumber,
+                                        item   = source,
+                                        label  = label,
+                                        temp   = tonumber(temp),
+                                    }
+                                end
+                            end
+
 						end
 					end
+
 					if dNumber ~= nil then
 						if #sources > 0 then
 							hwmon[#hwmon + 1] = {
@@ -56,34 +62,44 @@ local function getTempStatus()
 							}
 						end
 					end
+
 				end
 			end
 		end
+
 		if #hwmon > 0 then
 			sensors["0"] = hwmon
 		end
 	end
+
 	-- /sys/class/thermal
-	local dir   = fs.dir(sysThermal)
-	if dir then
+	local thermalDir   = fs.dir(sysThermal)
+	if thermalDir then
 		local thermal = {}
-		for item in dir do
+
+		for item in thermalDir do
 			if item:match("^thermal_zone[0-9]+$") then
 				local number = tonumber(item:match("[0-9]+"))
 				local temp   = readFile(string.format("%s/%s/temp", sysThermal, item))
 				local title  = readFile(string.format("%s/%s/type", sysThermal, item))
-				if number ~= nil and temp ~= nil then
-					thermal[#thermal + 1] = {
-						number = number, item = item, title = title, sources = {
-							[1] = { number = 0, item = nil, label = nil, temp = tonumber(temp) }
-						}
-					}
+
+                if string.find(title, "Core") then
+                    if number ~= nil and temp ~= nil then
+                        thermal[#thermal + 1] = {
+                            number = number, item = item, title = title, sources = {
+                                [1] = { number = 0, item = nil, label = nil, temp = tonumber(temp) }
+                            }
+                        }
+                    end
 				end
+
 			end
 		end
+
 		if #thermal > 0 then
 			sensors["1"] = thermal
 		end
+
 	end
 	io.write(json.stringify(sensors))
 end
