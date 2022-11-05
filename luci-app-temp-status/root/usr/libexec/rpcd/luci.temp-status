@@ -7,36 +7,36 @@ local sysHwmon   = "/sys/class/hwmon"
 local sysThermal = "/sys/class/thermal"
 
 local function readFile(path)
-	local s = fs.readfile(path)
-	return s and (s:gsub("^%s+", ""):gsub("%s+$", ""))
+    local s = fs.readfile(path)
+    return s and (s:gsub("^%s+", ""):gsub("%s+$", ""))
 end
 
 local function list()
-	io.write('{"getTempStatus":{}}')
+    io.write('{"getTempStatus":{}}')
 end
 
 local function getTempStatus()
-	local sensors = {}
-	-- /sys/class/hwmon
-	local hwmonDir = fs.dir(sysHwmon)
-	if hwmonDir then
-		local hwmon = {}
-		for item in hwmonDir do
-			if item:match("^hwmon[0-9]+$") then
-				local deviceDirPath = string.format("%s/%s", sysHwmon, item)
-				local deviceDir     = fs.dir(deviceDirPath)
-				if deviceDir then
-					local dNumber = tonumber(item:match("[0-9]+"))
-					local title   = readFile(deviceDirPath .. "/name")
-					local sources = {}
+    local sensors = {}
+    -- /sys/class/hwmon
+    local hwmonDir = fs.dir(sysHwmon)
+    if hwmonDir then
+        local hwmon = {}
+        for item in hwmonDir do
+            if item:match("^hwmon[0-9]+$") then
+                local deviceDirPath = string.format("%s/%s", sysHwmon, item)
+                local deviceDir     = fs.dir(deviceDirPath)
+                if deviceDir then
+                    local dNumber = tonumber(item:match("[0-9]+"))
+                    local title   = readFile(deviceDirPath .. "/name")
+                    local sources = {}
 
-					for source in deviceDir do
-						if source:match("^temp[0-9]+_input$") then
-							local sNumber = tonumber(source:match("[0-9]+"))
-							local temp    = readFile(
-								string.format("%s/%s", deviceDirPath, source))
-							local label   = readFile(
-								string.format("%s/%s", deviceDirPath, source:gsub("_input$", "_label")))
+                    for source in deviceDir do
+                        if source:match("^temp[0-9]+_input$") then
+                            local sNumber = tonumber(source:match("[0-9]+"))
+                            local temp    = readFile(
+                            string.format("%s/%s", deviceDirPath, source))
+                            local label   = readFile(
+                            string.format("%s/%s", deviceDirPath, source:gsub("_input$", "_label")))
 
                             if string.find(label, "Core") then
                                 if sNumber ~= nil and temp ~= nil then
@@ -49,39 +49,39 @@ local function getTempStatus()
                                 end
                             end
 
-						end
-					end
+                        end
+                    end
 
-					if dNumber ~= nil then
-						if #sources > 0 then
-							hwmon[#hwmon + 1] = {
-								number  = dNumber,
-								item    = item,
-								title   = title,
-								sources = sources,
-							}
-						end
-					end
+                    if dNumber ~= nil then
+                        if #sources > 0 then
+                            hwmon[#hwmon + 1] = {
+                                number  = dNumber,
+                                item    = item,
+                                title   = title,
+                                sources = sources,
+                            }
+                        end
+                    end
 
-				end
-			end
-		end
+                end
+            end
+        end
 
-		if #hwmon > 0 then
-			sensors["0"] = hwmon
-		end
-	end
+        if #hwmon > 0 then
+            sensors["0"] = hwmon
+        end
+    end
 
-	-- /sys/class/thermal
-	local thermalDir   = fs.dir(sysThermal)
-	if thermalDir then
-		local thermal = {}
+    -- /sys/class/thermal
+    local thermalDir   = fs.dir(sysThermal)
+    if thermalDir then
+        local thermal = {}
 
-		for item in thermalDir do
-			if item:match("^thermal_zone[0-9]+$") then
-				local number = tonumber(item:match("[0-9]+"))
-				local temp   = readFile(string.format("%s/%s/temp", sysThermal, item))
-				local title  = readFile(string.format("%s/%s/type", sysThermal, item))
+        for item in thermalDir do
+            if item:match("^thermal_zone[0-9]+$") then
+                local number = tonumber(item:match("[0-9]+"))
+                local temp   = readFile(string.format("%s/%s/temp", sysThermal, item))
+                local title  = readFile(string.format("%s/%s/type", sysThermal, item))
 
                 if string.find(title, "Core") then
                     if number ~= nil and temp ~= nil then
@@ -91,24 +91,24 @@ local function getTempStatus()
                             }
                         }
                     end
-				end
+                end
 
-			end
-		end
+            end
+        end
 
-		if #thermal > 0 then
-			sensors["1"] = thermal
-		end
+        if #thermal > 0 then
+            sensors["1"] = thermal
+        end
 
-	end
+    end
 
-	io.write(json.stringify(sensors))
+    io.write(json.stringify(sensors))
 end
 
 if arg[1] == "list" then
-	list()
+    list()
 elseif arg[1] == "call" and arg[2] == "getTempStatus" then
-	getTempStatus()
+    getTempStatus()
 end
 
 os.exit(0)
