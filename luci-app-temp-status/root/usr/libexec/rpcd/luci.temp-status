@@ -36,17 +36,15 @@ local function getTempStatus()
                             local temp    = readFile(
                             string.format("%s/%s", deviceDirPath, source))
                             local label   = readFile(
-                            string.format("%s/%s", deviceDirPath, source:gsub("_input$", "_label")))
+                            string.format("%s/%s", deviceDirPath, source:gsub("_input", "_label")))
 
-                            if string.find(label, "Core") then
-                                if sNumber ~= nil and temp ~= nil then
-                                    sources[#sources + 1] = {
-                                        number = sNumber,
-                                        item   = source,
-                                        label  = label,
-                                        temp   = tonumber(temp),
-                                    }
-                                end
+                            if sNumber ~= nil and temp ~= nil then
+                                sources[#sources + 1] = {
+                                    number = sNumber,
+                                    item   = source,
+                                    label  = label,
+                                    temp   = tonumber(temp),
+                                }
                             end
 
                         end
