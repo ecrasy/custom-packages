@@ -36,7 +36,7 @@ local function getTempStatus()
                             local temp    = readFile(
                             string.format("%s/%s", deviceDirPath, source))
                             local label   = readFile(
-                            string.format("%s/%s", deviceDirPath, source:gsub("_input", "_label")))
+                            string.format("%s/%s", deviceDirPath, string.gsub(source, "_input", "_label")))
 
                             if sNumber ~= nil and temp ~= nil then
                                 sources[#sources + 1] = {
@@ -50,7 +50,7 @@ local function getTempStatus()
                         end
                     end
 
-                    if dNumber ~= nil then
+                    if dNumber ~= nil and title:match("core") then
                         if #sources > 0 then
                             hwmon[#hwmon + 1] = {
                                 number  = dNumber,
