@@ -73,7 +73,7 @@ return baseclass.extend({
 			};
 		};
 
-		if(tempTable.childNodes.length === 1) {
+		if(tempTable.childNodes.length === 0) {
 			tempTable.append(
 				E('tr', { 'class': 'tr placeholder' },
 					E('td', { 'class': 'td' },
