@@ -19,5 +19,5 @@ config qbittorrent 'main'
 	option AuthSubnetWhitelistEnabled 'true'
 	list AuthSubnetWhitelist '192.168.0.0/16'
 	option SavePath '/mnt/sdb/download'
-	option Locale 'en'
+	option Locale 'zh'
 
