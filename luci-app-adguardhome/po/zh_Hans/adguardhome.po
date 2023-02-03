@@ -16,7 +16,7 @@ msgstr ""
 
 #: /mnt/A/openwrt-latest/package/ctcgfw/luci-app-adguardhome/luasrc/controller/AdGuardHome.lua:6
 msgid "AdGuard Home"
-msgstr ""
+msgstr "AdGuardHome"
 
 #: /mnt/A/openwrt-latest/package/ctcgfw/luci-app-adguardhome/luasrc/model/cbi/AdGuardHome/base.lua:67
 msgid "AdGuardHome Bin path if no bin will auto download"
