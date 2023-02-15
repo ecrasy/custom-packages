@@ -1,1 +1,1 @@
-Thanks to (sbwml)[https://github.com/sbwml/openwrt-qBittorrent]
+Thanks to [sbwml](https://github.com/sbwml/openwrt-qBittorrent)
