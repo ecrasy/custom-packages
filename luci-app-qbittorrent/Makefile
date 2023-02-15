@@ -11,7 +11,7 @@ PKG_RELEASE:=23
 
 LUCI_TITLE:=LuCI support for qBittorrent
 LUCI_PKGARCH:=all
-LUCI_DEPENDS:= qbittorrent
+LUCI_DEPENDS:= qBittorrent
 
 include $(TOPDIR)/feeds/luci/luci.mk
 
