@@ -7,12 +7,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qt6base
-PKG_VERSION:=6.4.3
+PKG_VERSION:=6.6.1
 PKG_RELEASE:=1
 
 PKG_SOURCE:=qtbase-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/qt/qtbase/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=e156692029a5503bad5f681bda856dd9df9dec17baa0ca7ee36b10178503ed40
+PKG_HASH:=eb091c56e8c572d35d3da36f94f9e228892d43aecb559fa4728a19f0e44914c4
 
 HOST_BUILD_DIR:=$(BUILD_DIR_HOST)/qtbase-$(PKG_VERSION)
 PKG_BUILD_DIR:=$(BUILD_DIR)/qtbase-$(PKG_VERSION)
