@@ -9,6 +9,6 @@ LUCI_DEPENDS:=+v2raya
 
 PKG_MAINTAINER:=Tianling Shen <cnsztl@immortalwrt.org>
 
-include ../../luci.mk
+include $(TOPDIR)/feeds/luci/luci.mk
 
 # call BuildPackage - OpenWrt buildroot signature
