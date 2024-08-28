@@ -7,12 +7,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qbittorrent
-PKG_VERSION:=4.6.2
+PKG_VERSION:=4.6.5
 PKG_RELEASE=1
 
 PKG_SOURCE:=qBittorrent-release-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/qbittorrent/qBittorrent/tar.gz/release-$(PKG_VERSION)?
-PKG_HASH:=dbe657cdbb0b9b0e4485cc30a70cfc91b675b3af83e1da5e06d61b0d449a762c
+PKG_HASH:=f330042fd0b27530b4a7b70b5d7ab356b2c9246393761df3b06891dc9dd8c106
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/qBittorrent-release-$(PKG_VERSION)
 
@@ -24,7 +24,6 @@ PKG_BUILD_DEPENDS:=qt6tools/host
 
 PKG_BUILD_PARALLEL:=1
 PKG_INSTALL:=1
-PKG_USE_MIPS16:=0
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
@@ -56,7 +55,6 @@ endef
 
 CMAKE_OPTIONS += \
 	-DCMAKE_BUILD_TYPE=Release \
-	-DCMAKE_CXX_STANDARD=17 \
 	-DQT6=ON \
 	-DSTACKTRACE=OFF \
 	-DWEBUI=ON \
@@ -64,22 +62,8 @@ CMAKE_OPTIONS += \
 	-DVERBOSE_CONFIGURE=ON \
 	-DQT_ADDITIONAL_PACKAGES_PREFIX_PATH=$(STAGING_DIR_HOSTPKG)
 
-ifdef CONFIG_USE_MIPS16
-  TARGET_CFLAGS += -minterlink-mips16
-endif
-
 ifdef CONFIG_USE_GLIBC
   TARGET_LDFLAGS += -ldl -lrt -lpthread
-endif
-
-TARGET_CFLAGS += -ffunction-sections -fdata-sections -flto
-TARGET_LDFLAGS += -Wl,--gc-sections,--as-needed -flto
-
-ifeq ($(ARCH),i386)
-  ifneq ($(findstring pentium-mmx,$(CONFIG_CPU_TYPE)),)
-    TARGET_CFLAGS := $(filter-out -flto,$(TARGET_CFLAGS))
-    TARGET_LDFLAGS := $(filter-out -flto,$(TARGET_LDFLAGS))
-  endif
 endif
 
 define Package/qbittorrent/conffiles
@@ -89,6 +73,11 @@ endef
 define Package/qbittorrent/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/qbittorrent-nox $(1)/usr/bin
+
+	$(INSTALL_DIR) $(1)/etc/config $(1)/etc/init.d $(1)/usr/share/qbittorrent
+	$(INSTALL_BIN) ./files/qbittorrent.init $(1)/etc/init.d/qbittorrent
+	$(INSTALL_CONF) ./files/qbittorrent.config $(1)/etc/config/qbittorrent
+	$(INSTALL_CONF) ./files/qBittorrent.conf.example $(1)/usr/share/qbittorrent/qBittorrent.conf.example
 endef
 
 $(eval $(call BuildPackage,qbittorrent))
