@@ -12,6 +12,7 @@ PKG_RELEASE:=1
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/ecrasy/v2ray-plugin/tar.gz/v$(PKG_VERSION)?
 PKG_HASH:=b2ac63fce4c5f1c54a83aef5a37e6dc918f5c27760cb7886ef1bd655190e298d
+
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
 PKG_MAINTAINER:=madeye <max.c.lv@gmail.com>
