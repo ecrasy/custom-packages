@@ -1,18 +1,18 @@
 #
-# Copyright (C) 2020 gSpot (https://github.com/gSpotx2f/luci-app-temp-status)
+# Copyright (C) 2026 gSpot (https://github.com/gSpotx2f/luci-app-temp-status)
 #
 # This is free software, licensed under the MIT License.
 #
 
 include $(TOPDIR)/rules.mk
 
-LUCI_TITLE:=Temperature sensors data for the LuCI status page
-LUCI_DEPENDS:=+luci
-LUCI_PKGARCH:=all
-
 PKG_NAME:=luci-app-temp-status
-PKG_VERSION:=0.3.5
-PKG_RELEASE:=2
+PKG_VERSION:=0.8.1
+PKG_RELEASE:=1
+LUCI_TITLE:=Temperature sensors data for the LuCI status page
+LUCI_DEPENDS:=+ucode +ucode-mod-fs
+LUCI_PKGARCH:=all
+PKG_LICENSE:=MIT
 
 include $(TOPDIR)/feeds/luci/luci.mk
 
