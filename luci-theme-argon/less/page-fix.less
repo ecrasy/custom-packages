@@ -362,7 +362,10 @@
         background: #fb6340 !important;
         border-color: #fb6340 !important;
         margin-left: 0 !important;
-        width: 82px !important;
+    }
+
+    .cbi-button.cbi-button-action.important {
+        align-self: flex-end;
     }
 }
 
@@ -388,7 +391,7 @@
 [data-page="admin-system-poweroffdevice"] {
     .container {
         h2 {
-            margin: 0 0 1rem 0;
+            margin: 0;
         }
 
         h2+p {
@@ -399,6 +402,11 @@
         button+div {
             display: none;
         }
+    }
+
+
+    .btn.cbi-button.cbi-button-negative {
+        align-self: flex-end;
     }
 }
 
@@ -539,10 +547,42 @@
 // 3. Status Pages
 // ==========================================================================
 
+.cbi-section.fade-in {
+    .cbi-title {
+        position: relative;
+
+        > div:last-child {
+            position: absolute;
+            right: 1.25rem;
+            top: 0;
+
+            span {
+                font-size: 0;
+                background: none!important;
+                color: #ced4da!important;
+
+                &:after {
+                    transition: all .3s;
+                    font-family: 'argon' !important;
+                    content: '\e90f';
+                    font-size: 1.1rem;
+                    padding: .8755rem 0;
+                    position: absolute;
+                    right: 0;
+                }
+
+                &[data-style=inactive]:after {
+                    transform: rotate(90deg);
+                }
+            }
+        }
+    }
+}
+
 // Status - Overview
 [data-page="admin-status"],
 [data-page="admin-status-overview"] {
-    #view>div:first-child {
+    #view > div:first-child {
         gap: 0 !important;
     }
 }
@@ -559,18 +599,23 @@
     .nft-chain-hook {
         padding: 0.5rem 1.25rem;
     }
-}
 
-// Status - Network Bandwidth Monitor
-[data-page="admin-nlbw-display"] {
-    .cbi-section[data-tab="export"] {
-        padding: 1.5rem !important;
+    // Fixed the issue of .alert-message not closing properly.
+    .alert-message { 
+        opacity: 1;
+    }
+    .alert-message.fade-out {
+        opacity: 0;
     }
 }
 
-[data-page="admin-nlbw-backup"] {
-    form {
-        padding-left: 1.5rem;
+// Status - Network Bandwidth Monitor
+[data-page="admin-services-nlbw-display"] {
+    .cbi-section[data-tab="export"] {
+        padding: 1.5rem !important;
+    }
+    .cbi-section > .right {
+        margin: 15px 15px 0px 0px;
     }
 }
 
@@ -612,6 +657,17 @@
         padding: 0;
     }
 
+}
+
+// Services - SmartDNS
+#cbi-smartdns {
+    #service_status {
+        padding: 16px;
+    }
+    
+    .cbi-section-node {
+        padding: 16px;
+    }
 }
 
 
@@ -664,6 +720,11 @@
         .developer-container {
             background: transparent;
         }
+
+        .announcement-card {
+            width: auto!important;
+            margin: 10px!important;
+        }
     }
 
     #cbi-openclash>fieldset {
@@ -697,6 +758,15 @@
 
     .sub-card .card-title {
         margin-top: 5px;
+    }
+
+    .oc .sub-card:hover {
+      transform: none;
+    }
+
+    .oc .myip-ip-item:hover,
+    .oc .myip-check-item:hover {
+      transform: none;
     }
 
     .oc .main-cards-container {
@@ -757,7 +827,6 @@
 
     .cbi-input-file {
         padding: 0.2813rem;
-        box-sizing: content-box;
         width: 15rem !important;
     }
 
@@ -807,6 +876,24 @@
     background: transparent;
 }
 
+// VPN - Passwall2
+[data-page^="admin-vpn-passwall2"],
+[data-page^="admin-services-passwall2"] {
+    .tr,
+    .td,
+    .th,
+    .cbi-section-table-row,
+    #cbi-passwall2-socks,
+    #cbi-passwall2-socks * {
+        overflow: visible !important;
+        max-height: none !important;
+        transform: none !important;
+        filter: none !important;
+        contain: none !important;
+        clip-path: none !important;
+    }
+}
+
 /* openvpn bug fix */
 .OpenVPN a {
     line-height: initial !important;
@@ -850,6 +937,24 @@
             width: 23rem;
         }
     }
+}
+
+#cbi-wireless,
+#cbi-wireless *,
+#wifi_assoclist_table,
+#wifi_assoclist_table * {
+    overflow: visible !important;
+    max-height: none !important;
+    transform: none !important;
+    filter: none !important;
+    contain: none !important;
+    clip-path: none !important;
+}
+
+#cbi-wireless,
+#wifi_assoclist_table {
+    height: auto !important;
+    min-height: 0 !important;
 }
 
 /* samba */
@@ -949,4 +1054,17 @@ div[style*="display:grid;grid-template-columns:repeat"] {
 [data-page^="command-cfg"] .mobile-hide,
 [data-page^="command-cfg"] .showSide {
     display: none;
+}
+
+// overview & mwan3
+#mwan3-service-status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#mwan3-service-status > .alert-message { 
+    position: static;
+    transform: none;
 }
