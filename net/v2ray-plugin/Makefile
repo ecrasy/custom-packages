@@ -6,12 +6,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=v2ray-plugin
-PKG_VERSION:=5.41.0
+PKG_VERSION:=5.51.3
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/ecrasy/v2ray-plugin/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=a8062cc12457d2626f32f691a9533a3f89c4ee9593505e26a645e79f927b3044
+PKG_HASH:=42228d764cabfcb7253bd4661a91305ab67c6d9981588fbf6e85e09372d042b4
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
@@ -22,7 +22,7 @@ PKG_BUILD_PARALLEL:=1
 PKG_USE_MIPS16:=0
 PKG_BUILD_FLAGS:=no-mips16
 
-GO_PKG:=github.com/shadowsocks/v2ray-plugin
+GO_PKG:=github.com/ecrasy/v2ray-plugin
 GO_PKG_LDFLAGS_X:=main.VERSION=v$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
@@ -33,7 +33,7 @@ define Package/v2ray-plugin
   CATEGORY:=Network
   SUBMENU:=Web Servers/Proxies
   TITLE:=SIP003 plugin for shadowsocks, based on v2ray
-  URL:=https://github.com/teddysun/v2ray-plugin
+  URL:=https://github.com/ecrasy/v2ray-plugin
   DEPENDS:=$(GO_ARCH_DEPENDS) +ca-bundle
 endef
 

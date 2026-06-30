@@ -7,19 +7,18 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qt6base
-PKG_VERSION:=6.8.3
+PKG_VERSION:=6.11.1
 PKG_RELEASE:=1
 
 PKG_SOURCE:=qtbase-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/qt/qtbase/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=cea5c8f2c20d9cbd684f8a402721e63b87a2886e906f6ec7e0f7e1ff69c83206
+PKG_HASH:=e20852bd45cdef5da5175f3634e285e03e2be7ca437f3d2b7e1a2af7321bca7a
 
 HOST_BUILD_DIR:=$(BUILD_DIR_HOST)/qtbase-$(PKG_VERSION)
 PKG_BUILD_DIR:=$(BUILD_DIR)/qtbase-$(PKG_VERSION)
 
 PKG_BUILD_DEPENDS:=qt6base/host
 PKG_BUILD_PARALLEL:=1
-PKG_USE_MIPS16:=0
 PKG_BUILD_FLAGS:=no-mips16
 CMAKE_INSTALL:=1
 
@@ -35,7 +34,7 @@ define Package/libQt6/Default
   SUBMENU:=Qt6
   TITLE:=Qt6
   URL:=http://qt-project.org
-  DEPENDS:=@!arc +libatomic +libstdcpp +zlib
+  DEPENDS:=@!arc +libatomic +libstdcpp +liburing +zlib
 endef
 
 define Package/libQt6
@@ -56,7 +55,6 @@ endif
 CMAKE_SHARED_LDFLAGS := $(filter-out -Wl$(comma)-Bsymbolic-functions,$(CMAKE_SHARED_LDFLAGS))
 
 CMAKE_HOST_OPTIONS+= \
-	-DQT_FORCE_MIN_CMAKE_VERSION_FOR_BUILDING_QT=3.19 \
 	-DBUILD_SHARED_LIBS=OFF \
 	-DFEATURE_optimize_full=ON \
 	-DFEATURE_glib=OFF \
@@ -71,8 +69,6 @@ CMAKE_HOST_OPTIONS+= \
 	-DFEATURE_xml=ON
 
 CMAKE_OPTIONS+= \
-	-DQT_FORCE_MIN_CMAKE_VERSION_FOR_BUILDING_QT=3.19 \
-	-DQT_FORCE_MIN_CMAKE_VERSION_FOR_USING_QT=3.19 \
 	-DBUILD_SHARED_LIBS=ON \
 	-DCMAKE_SYSROOT=$(STAGING_DIR) \
 	-DQT_HOST_PATH=$(STAGING_DIR_HOSTPKG) \
@@ -130,6 +126,7 @@ CMAKE_OPTIONS+= \
 	-DFEATURE_testlib=$(if $(CONFIG_PACKAGE_libQt6Test),ON,OFF) \
 	-DFEATURE_itemmodeltester=OFF \
 	-DFEATURE_widgets=$(if $(CONFIG_PACKAGE_libQt6Widgets),ON,OFF) \
+	-DFEATURE_commandlinkbutton=OFF \
 	-DFEATURE_xml=$(if $(CONFIG_PACKAGE_libQt6Xml),ON,OFF) \
 	-DFEATURE_tuiotouch=$(if $(CONFIG_PACKAGE_qt6-plugin-libqtuiotouchplugin),ON,OFF)
 
