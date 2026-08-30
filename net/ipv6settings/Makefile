@@ -24,7 +24,8 @@ define Package/ipv6settings
 	TITLE:=IPv6 Settings Helper
 	PKGARCH:=all
 	DEPENDS:=+luci-proto-ipv6 +wget +ip6tables +libip6tc +kmod-ipt-nat6 +odhcpd-ipv6only +odhcp6c +6in4 \
-			 +bash +LUCI_LANG_zh_Hans +vim-full +whereis +which +lrzsz +lscpu
+			 +whereis +which +lrzsz +lscpu +bash \
+			 +@LUCI_LANG_zh-cn +@LUCI_LANG_zh_Hans +@LUCI_LANG_en
 endef
 
 define Package/ipv6settings/description
